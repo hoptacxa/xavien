@@ -1,34 +1,47 @@
 // Biến để lưu trữ URL hiện tại
 let currentUrl = null;
 
-// Hàm hiển thị popup với URL
-function showPopup(url) {
-  const popup = document.createElement("div");
-  popup.style.position = "fixed";
-  popup.style.bottom = "10px";
-  popup.style.right = "10px";
-  popup.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-  popup.style.color = "#fff";
-  popup.style.padding = "10px 20px";
-  popup.style.borderRadius = "8px";
-  popup.style.zIndex = "9999";
-  popup.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.5)";
-  popup.innerText = `Current URL: ${url}`;
+// Hàm hiển thị iframe
+function showIframe() {
+  // Xóa iframe cũ (nếu có)
+  const existingIframe = document.getElementById("custom-iframe");
+  if (existingIframe) {
+    existingIframe.remove();
+  }
 
-  // Thêm popup vào trang
-  document.body.appendChild(popup);
+  // Tạo iframe mới
+  const iframe = document.createElement("iframe");
+  iframe.id = "custom-iframe";
+  iframe.width = "176";
+  iframe.height = "144";
+  iframe.src = "https://htx.schnworks.com/" + currentUrl.replace(/[^a-zA-Z0-9]/g, '_');
+  iframe.title = "YouTube video player";
+  iframe.style.border = '0px'
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  iframe.allowFullscreen = true;
 
-  // Tự động xóa popup sau 5 giây
-  setTimeout(() => {
-    popup.remove();
-  }, 5000);
+  // Định vị iframe trên trang
+  iframe.style.position = "fixed";
+  iframe.style.bottom = "10px";
+  iframe.style.right = "10px";
+  iframe.style.zIndex = "9999";
+  iframe.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.5)";
+
+  // Thêm iframe vào trang
+  document.body.appendChild(iframe);
+
+  // Tự động xóa iframe sau 10 giây (nếu cần)
+  // setTimeout(() => {
+  //   iframe.remove();
+  // }, 10000);
 }
 
 // Hàm kiểm tra URL thay đổi
 function checkUrlChange() {
   if (currentUrl !== window.location.href) {
     currentUrl = window.location.href; // Cập nhật URL hiện tại
-    showPopup(currentUrl); // Hiển thị popup
+    showIframe(); // Hiển thị iframe mới
   }
 }
 
