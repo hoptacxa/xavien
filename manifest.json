@@ -1,10 +1,17 @@
 {
     "manifest_version": 3,
-    "name": "Simple Chrome Extension",
+    "name": "XaVien",
     "version": "1.0",
-    "description": "A simple Chrome extension that says 'Hello, World!'",
-    "action": {
-        "default_popup": "popup.html"
-    },
-    "permissions": ["tabs"]
+    "description": "Displays the current tab's URL automatically when a page is loaded.",
+    "permissions": [],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
 }
